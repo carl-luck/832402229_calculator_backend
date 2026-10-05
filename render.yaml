@@ -1,0 +1,19 @@
+# Render 蓝图：连接本仓库后选择 "New + → Blueprint"，会自动按下面配置创建服务
+# 说明：作业要求"可公开访问的地址"，用 Render 免费实例即可，无需付费。
+services:
+  - type: web
+    name: 832402229_calculator_backend
+    runtime: python
+    plan: free
+    region: singapore          # 离国内最近，首次访问更快
+    buildCommand: ""           # 后端只用 Python 标准库，无需安装依赖
+    # ★ 关键：必须把平台注入的 $PORT 传给服务，否则健康检查会失败
+    startCommand: python server.py
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.6"
+      - key: CORS_ORIGIN
+        value: "*"             # 助教用任意地址测试都方便；也可改成前端仓库的具体域名
+      - key: CALCULATOR_DB
+        value: /opt/render/project/src/data/calculator.db

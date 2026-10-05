@@ -1,0 +1,2 @@
+# The backend uses only Python's standard library. No pip dependencies are required.
+
